@@ -1,7 +1,6 @@
-
-
 var isAdmin = 0; 
-
+var username = "";
+var password = "";
 
 document.getElementById("adminButton").addEventListener("click", function () {
     
@@ -15,33 +14,19 @@ document.getElementById("studentButton").addEventListener("click", function () {
     document.getElementById("title").textContent = "Student Login";
 });
 
-// document.getElementById("userLoginForm").addEventListener("submit", function (e) {
-//     e.preventDefault(); 
-
-//     //For the user
-//     const username = document.getElementById("user_username").value;
-//     const password = document.getElementById("user_password").value; 
-//     handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
-// });
-
-// document.getElementById("adminLoginForm").addEventListener("submit", function (e) {
-//     e.preventDefault(); 
-//     //For the admin
-//     const username = document.getElementById("admin_username").value;
-//     const password = document.getElementById("admin_password").value;
 
 
 //     handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
-// });
+
 
 document.getElementById("login").addEventListener("click",function(){
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
+    username = document.getElementById('username').value;
+    password = document.getElementById('password').value;
     var data = {
         'username' : username,
         'password' : password,
-        'type' : isAdmin;
-    }
+        'type' : isAdmin
+    };
 });
 
 
