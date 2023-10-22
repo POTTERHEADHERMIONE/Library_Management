@@ -1,43 +1,47 @@
 
 
-var admin = 0; 
+var isAdmin = 0; 
 
-function loadUserLogin() {
-    
-    document.getElementById("userButton").click();
-}
 
 document.getElementById("adminButton").addEventListener("click", function () {
     
-    admin = 1;
-    document.getElementById("userLogin").style.display = "none";
-    document.getElementById("adminLogin").style.display = "block";
+    isAdmin = 1;
+    document.getElementById("title").textContent = "Admin Login";
 });
 
-document.getElementById("userButton").addEventListener("click", function () {
+document.getElementById("studentButton").addEventListener("click", function () {
 
-    admin = 0;
-    document.getElementById("adminLogin").style.display = "none";
-    document.getElementById("userLogin").style.display = "block";
+    isAdmin = 0;
+    document.getElementById("title").textContent = "Student Login";
 });
 
-document.getElementById("userLoginForm").addEventListener("submit", function (e) {
-    e.preventDefault(); 
+// document.getElementById("userLoginForm").addEventListener("submit", function (e) {
+//     e.preventDefault(); 
 
-    //For the user
-    const username = document.getElementById("user_username").value;
-    const password = document.getElementById("user_password").value; 
-    handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
-});
+//     //For the user
+//     const username = document.getElementById("user_username").value;
+//     const password = document.getElementById("user_password").value; 
+//     handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
+// });
 
-document.getElementById("adminLoginForm").addEventListener("submit", function (e) {
-    e.preventDefault(); 
-    //For the admin
-    const username = document.getElementById("admin_username").value;
-    const password = document.getElementById("admin_password").value;
+// document.getElementById("adminLoginForm").addEventListener("submit", function (e) {
+//     e.preventDefault(); 
+//     //For the admin
+//     const username = document.getElementById("admin_username").value;
+//     const password = document.getElementById("admin_password").value;
 
 
-    handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
+//     handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
+// });
+
+document.getElementById("login").addEventListener("click",function(){
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    var data = {
+        'username' : username,
+        'password' : password,
+        'type' : isAdmin;
+    }
 });
 
 

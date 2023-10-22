@@ -24,6 +24,12 @@ button {
     padding: 10px 20px;
     font-size: 16px;
     transition: background-color 0.3s; 
+    padding: 5px 10px; 
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 100px;
+    width: 100px;
 }
 
 
@@ -45,19 +51,4 @@ input {
     width: 500px;
     padding: 10px;
     margin-bottom: 10px;
-}
-
-
-#login-container {
-    display: flex;
-    justify-content: center;
-}
-
-.login-button {
-    padding: 5px 10px; 
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 100px;
-    width: 100px;
 }
