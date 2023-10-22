@@ -1,34 +1,76 @@
-// Initialize the Google API client
-function initGoogleSignIn() {
-    gapi.load('auth2', function() {
-        gapi.auth2.init({
-            client_id: 'YOUR_CLIENT_ID',
-        });
+
+
+var admin = 0; 
+
+function loadUserLogin() {
+    
+    document.getElementById("userButton").click();
+}
+
+document.getElementById("adminButton").addEventListener("click", function () {
+    
+    admin = 1;
+    document.getElementById("userLogin").style.display = "none";
+    document.getElementById("adminLogin").style.display = "block";
+});
+
+document.getElementById("userButton").addEventListener("click", function () {
+
+    admin = 0;
+    document.getElementById("adminLogin").style.display = "none";
+    document.getElementById("userLogin").style.display = "block";
+});
+
+document.getElementById("userLoginForm").addEventListener("submit", function (e) {
+    e.preventDefault(); 
+
+    //For the user
+    const username = document.getElementById("user_username").value;
+    const password = document.getElementById("user_password").value; 
+    handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
+});
+
+document.getElementById("adminLoginForm").addEventListener("submit", function (e) {
+    e.preventDefault(); 
+    //For the admin
+    const username = document.getElementById("admin_username").value;
+    const password = document.getElementById("admin_password").value;
+
+
+    handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
+});
+
+
+function handleLoginRequest(username, password, type) {
+    const url = ''; //server url
+
+    
+    const data = {
+        username: username,
+        password: password,
+        type: type
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Login request failed');
+        }
+    })
+    .then(data => {
+        
+        console.log(data);
+    })
+    .catch(error => {
+        
+        console.error(error);
     });
 }
-
-// Create the Google Sign-In button
-function renderGoogleSignInButton() {
-    gapi.signin2.render('google-signin-button', {
-        'scope': 'profile email',
-        'width': 200,
-        'height': 40,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSignIn,
-    });
-}
-
-// Callback function when a user signs in
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    var name = profile.getName();
-    var email = profile.getEmail();
-    alert('Welcome, ' + name + ' (' + email + ')');
-}
-
-// Load the Google API client and render the button
-window.onload = function() {
-    initGoogleSignIn();
-    renderGoogleSignInButton();
-};

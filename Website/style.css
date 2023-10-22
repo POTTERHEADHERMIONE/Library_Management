@@ -1,22 +1,63 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-}
-
-.container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     text-align: center;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #f0f8ff, #87ceeb); /* Light blue gradient */
+    height: 100vh;
+    width: 100vw; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
     color: #333;
 }
 
-#google-signin-button {
-    margin-top: 20px;
+div {
+    margin: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background-color 0.3s; 
+}
+
+
+button:active {
+    background-color: #87ceeb; 
+}
+
+form {
+    margin: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 500px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+
+#login-container {
+    display: flex;
+    justify-content: center;
+}
+
+.login-button {
+    padding: 5px 10px; 
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 100px;
+    width: 100px;
 }

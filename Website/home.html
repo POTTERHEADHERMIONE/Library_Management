@@ -1,16 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Google Login Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
-    <div class="container">
-        <h1>Google Login</h1>
-        <div id="google-signin-button"></div>
+<body onload="loadUserLogin()">
+    <h1>Library Management System</h1>
+    
+    <div>
+        <h2>PROFILE</h2>
+        <button id="adminButton" class="login-button">Admin</button>
+        <button id="userButton" class="login-button">User</button>
     </div>
 
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <div id="adminLogin" style="display: none;">
+        <h2>Admin Login</h2>
+         <form action="admin_login.php" method="post">
+            <label for="admin_username">Username:</label>
+            <input type="text" id="admin_username" name="admin_username" required><br>
+            <label for="admin_password">Password:</label>
+            <input type="password" id="admin_password" name="admin_password" required><br>
+            <input type="submit" value="Login" class="login-button">
+         </form> 
+    </div>
+
+    <div id="userLogin">
+        <h2>User Login</h2>
+        <form action="user_login.php" method="post">
+            <label for="user_username">Username:</label>
+            <input type="text" id="user_username" name="user_username" required><br>
+            <label for="user_password">Password:</label>
+            <input type="password" id="user_password" name="user_password" required><br>
+            <input type="submit" value="Login" class="login-button">
+        </form>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
