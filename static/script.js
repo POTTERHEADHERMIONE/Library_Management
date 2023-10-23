@@ -1,5 +1,5 @@
 var isAdmin = 0;
-var username = "";
+var userid = "";
 var password = "";
 
 document.getElementById("adminButton").addEventListener("click", function () {
@@ -14,23 +14,23 @@ document.getElementById("studentButton").addEventListener("click", function () {
 
 
 
-//     handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
+//     handleLoginRequest(userid, password, admin === 1 ? "admin" : "user");
 
 function addColumn(tableHeaderRow, width, columnName){
     var column = document.createElement("th");
     column.textContent = columnName;
     column.style.border = "1px solid black"; 
-    column.style.width = str(width)+"%"; 
+    column.style.width = width.toString()+"%"; 
     column.style.padding = "10px"; 
     tableHeaderRow.appendChild(column)
 };
 
 document.getElementById("login").addEventListener("click", function () {
     event.preventDefault();
-    username = document.getElementById('userid').value;
+    userid = document.getElementById('userid').value;
     password = document.getElementById('password').value;
     var data = {
-        'id': username,
+        'id': userid,
         'password': password,
         'isAdmin': isAdmin
     };
@@ -48,14 +48,15 @@ document.getElementById("login").addEventListener("click", function () {
                 document.getElementById("status").textContent = "Invalid Credentials";
             }
             else {
+            // if (true)
                 var contentContainer = document.getElementById('content-container');
                 contentContainer.innerHTML = "";
 
                 var nameElement = document.createElement('label');
-                nameElement.textContent = data['name'];
+                nameElement.textContent = "Name : "+data['name'];
                 contentContainer.appendChild(nameElement);
                 var rollElement = document.createElement('label');
-                rollElement.textContent = data['roll'];
+                rollElement.textContent = "ID   : "+data['id'];
                 contentContainer.appendChild(rollElement);
                 nameElement.style.textContent = "Top left corner";
                 nameElement.style.position = "fixed";

@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
 print("Importing")
-from pymongo import MongoClient
 import database
 print("imported")
 
@@ -19,19 +18,21 @@ def home():
 
 @app.route('/login',methods=['POST'])
 def login():
+
     data = request.get_json()
-    student = database.studentList.find_one(data['id'])
+    student = database.studentList.find_one({'id':data['id']})
     response = {}
 
     if (student) :
         if (student['password'] == data['password']) :
-            response = {'status':'Success','name':student['name'],'roll':student['roll'], 'books':{}}
+            response = {'status':'success','name':student['name'],'id':student['id'], 'books':{}}
             for a in student['books'] :
                 response['books'].update(a = database.getBookInfo(a))
         else :
             response = {'status':'invalid password'}
     else :
         response = {'status':'User doesn\'t exist'}
+    print(response)
     return jsonify(response), 200
 
 

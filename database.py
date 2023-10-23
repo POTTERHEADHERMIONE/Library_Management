@@ -11,9 +11,9 @@ adminList = db['admin']
 studentList = db['student']
 bookList = db['books']
 
-adminList.delete_many({})
-studentList.delete_many({})
-bookList.delete_many({})
+# adminList.delete_many({})
+# studentList.delete_many({})
+# bookList.delete_many({})
 
 def incBookCount(id):
     book = bookList.find_one({'id':id})
@@ -50,19 +50,18 @@ def deleteBook(id):
     else :
         return 0
     
-def addUser(id, password,type=1):
+def addUser(id, password,name,isStudent=1):
     collection = studentList
-    if (type == 0):
+    if (isStudent == 0):
         collection = adminList
     userExists = collection.find_one({'id':id})
     if (userExists):
         return 0
     else :
-        if (type):
-            collection.insert_one({'id':id, 'password':password, 'books':[]})
-        else :
-            collection.insert_one({'id':id, 'password':password})
-        
+        data = {'id':id, 'password':password, 'name':name}
+        if (isStudent):
+            data.update({"books":[]})
+        collection.insert_one(data)
         return 1
     
 def issueBook(bookid, studentid):
@@ -95,4 +94,10 @@ def getBookInfo(bookid):
     else :
         return {}
 
+def clear():
+    adminList.delete_many({})
+    studentList.delete_many({})
+    bookList.delete_many({})
 
+if __name__ == "__main__":
+    clear()
