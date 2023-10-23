@@ -3,13 +3,11 @@ var username = "";
 var password = "";
 
 document.getElementById("adminButton").addEventListener("click", function () {
-
     isAdmin = 1;
     document.getElementById("title").textContent = "Admin Login";
 });
 
 document.getElementById("studentButton").addEventListener("click", function () {
-
     isAdmin = 0;
     document.getElementById("title").textContent = "Student Login";
 });
@@ -43,8 +41,6 @@ document.getElementById("login").addEventListener("click", function () {
         },
         body: JSON.stringify(data)
     })
-        //decide what to do..
-        // document.getElementById("title").textContent = "Stuff worked";
 
         .then(response => response.json())
         .then(data => {
