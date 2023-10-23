@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, jsonify
+print("Importing")
 from pymongo import MongoClient
 import database
+print("imported")
+
 app = Flask(__name__)
 
 # Configure the path to the templates folder
@@ -18,12 +21,17 @@ def home():
 def login():
     data = request.get_json()
     student = database.studentList.find_one(data['id'])
+    response = {}
+
     if (student) :
         if (student['password'] == data['password']) :
-            response = {'status':'Success','name':student['name'],'roll':student['roll']}
-    #simulate stuff
-    response = {'status':'Success','name' : "Saakshi", 'roll':"307",'books':{"13":{"title":"As if I care","author":"Saakshi","taken":"23/03/23","due":"23/04/23"}}}
-    # response = {'status':'Invalid Credentials'}
+            response = {'status':'Success','name':student['name'],'roll':student['roll'], 'books':{}}
+            for a in student['books'] :
+                response['books'].update(a = database.getBookInfo(a))
+        else :
+            response = {'status':'invalid password'}
+    else :
+        response = {'status':'User doesn\'t exist'}
     return jsonify(response), 200
 
 

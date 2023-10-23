@@ -18,6 +18,14 @@ document.getElementById("studentButton").addEventListener("click", function () {
 
 //     handleLoginRequest(username, password, admin === 1 ? "admin" : "user");
 
+function addColumn(tableHeaderRow, width, columnName){
+    var column = document.createElement("th");
+    column.textContent = columnName;
+    column.style.border = "1px solid black"; 
+    column.style.width = str(width)+"%"; 
+    column.style.padding = "10px"; 
+    tableHeaderRow.appendChild(column)
+};
 
 document.getElementById("login").addEventListener("click", function () {
     event.preventDefault();
@@ -40,7 +48,7 @@ document.getElementById("login").addEventListener("click", function () {
 
         .then(response => response.json())
         .then(data => {
-            if (data['status'] != 'Success') {
+            if (data['status'] != 'success') {
                 document.getElementById("status").textContent = "Invalid Credentials";
             }
             else {
@@ -70,78 +78,84 @@ document.getElementById("login").addEventListener("click", function () {
                 bookTable.style.width = "80%";              
 
                 var tableHeaderRow = document.createElement("tr");
+                addColumn(tableHeaderRow, 10,"BookID")
+                addColumn(tableHeaderRow, 30,"Title")
+                addColumn(tableHeaderRow, 30, "Author")
+                addColumn(tableHeaderRow, 10, "Taken")
+                addColumn(tableHeaderRow, 10, "Due")
 
 
-                var titleHead = document.createElement("th");
-                titleHead.textContent = "Title";
-                titleHead.style.border = "1px solid black"; 
-                titleHead.style.width = "30%"; 
-                titleHead.style.padding = "10px"; 
+                // var titleHead = document.createElement("th");
+                // titleHead.textContent = "Title";
+                // titleHead.style.border = "1px solid black"; 
+                // titleHead.style.width = "30%"; 
+                // titleHead.style.padding = "10px"; 
 
-                var authorHead = document.createElement("th");
-                authorHead.textContent = "Author";
-                authorHead.style.border = "1px solid black";
-                authorHead.style.width = "20%";
-                authorHead.style.padding = "10px";
+                // var authorHead = document.createElement("th");
+                // authorHead.textContent = "Author";
+                // authorHead.style.border = "1px solid black";
+                // authorHead.style.width = "20%";
+                // authorHead.style.padding = "10px";
 
-                var takenHead = document.createElement("th");
-                takenHead.textContent = "Taken";
-                takenHead.style.border = "1px solid black";
-                takenHead.style.width = "15%";
-                takenHead.style.padding = "10px";
+                // var takenHead = document.createElement("th");
+                // takenHead.textContent = "Taken";
+                // takenHead.style.border = "1px solid black";
+                // takenHead.style.width = "15%";
+                // takenHead.style.padding = "10px";
 
-                var dueHead = document.createElement("th");
-                dueHead.textContent = "Due";
-                dueHead.style.border = "1px solid black";
-                dueHead.style.width = "15%";
-                dueHead.style.padding = "10px";
+                // var dueHead = document.createElement("th");
+                // dueHead.textContent = "Due";
+                // dueHead.style.border = "1px solid black";
+                // dueHead.style.width = "15%";
+                // dueHead.style.padding = "10px";
 
-                tableHeaderRow.appendChild(titleHead);
-                tableHeaderRow.appendChild(authorHead);
-                tableHeaderRow.appendChild(takenHead);
-                tableHeaderRow.appendChild(dueHead);
+                // tableHeaderRow.appendChild(titleHead);
+                // tableHeaderRow.appendChild(authorHead);
+                // tableHeaderRow.appendChild(takenHead);
+                // tableHeaderRow.appendChild(dueHead);
+
                 bookTable.appendChild(tableHeaderRow);
 
-                for (const bookID in data["books"]) {
-                    if (data.books.hasOwnProperty(bookID)) {
-                        const book = data.books[bookID];
+                // for (const bookID in data["books"]) {
+                //     if (data.books.hasOwnProperty(bookID)) {
+                //         const book = data.books[bookID];
 
-                        var bookRow = document.createElement("tr");
-                        var titleCell = document.createElement("td");
-                        titleCell.textContent = book.title;
-                        titleCell.style.border = "1px solid black";
-                        titleCell.style.width = "30%"; 
-                        titleCell.style.padding = "10px";
+                //         var bookRow = document.createElement("tr");
+                //         var titleCell = document.createElement("td");
+                //         titleCell.textContent = book.title;
+                //         titleCell.style.border = "1px solid black";
+                //         titleCell.style.width = "30%"; 
+                //         titleCell.style.padding = "10px";
 
-                        var authorCell = document.createElement("td");
-                        authorCell.textContent = book.author;
-                        authorCell.style.border = "1px solid black";
-                        authorCell.style.width = "20%";
-                        authorCell.style.padding = "10px";
+                //         var authorCell = document.createElement("td");
+                //         authorCell.textContent = book.author;
+                //         authorCell.style.border = "1px solid black";
+                //         authorCell.style.width = "20%";
+                //         authorCell.style.padding = "10px";
 
-                        var takenCell = document.createElement("td");
-                        takenCell.textContent = book.taken;
-                        takenCell.style.border = "1px solid black";
-                        takenCell.style.width = "15%";
-                        takenCell.style.padding = "10px";
+                //         var takenCell = document.createElement("td");
+                //         takenCell.textContent = book.taken;
+                //         takenCell.style.border = "1px solid black";
+                //         takenCell.style.width = "15%";
+                //         takenCell.style.padding = "10px";
 
-                        var dueCell = document.createElement("td");
-                        dueCell.textContent = book.due;
-                        dueCell.style.border = "1px solid black";
-                        dueCell.style.width = "15%";
-                        dueCell.style.padding = "10px";
+                //         var dueCell = document.createElement("td");
+                //         dueCell.textContent = book.due;
+                //         dueCell.style.border = "1px solid black";
+                //         dueCell.style.width = "15%";
+                //         dueCell.style.padding = "10px";
 
                         
-                        bookRow.appendChild(titleCell);
-                        bookRow.appendChild(authorCell);
-                        bookRow.appendChild(takenCell);
-                        bookRow.appendChild(dueCell);
-                        bookTable.appendChild(bookRow);
-                    }
-                }
+                //         bookRow.appendChild(titleCell);
+                //         bookRow.appendChild(authorCell);
+                //         bookRow.appendChild(takenCell);
+                //         bookRow.appendChild(dueCell);
+                //         bookTable.appendChild(bookRow);
+                //     }
+                // }
 
               bookTable.style.border = "1px solid black";
-                document.body.appendChild(bookTable);
+            document.body.appendChild(bookTable);
 
 
              

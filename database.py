@@ -58,16 +58,20 @@ def addUser(id, password,type=1):
     if (userExists):
         return 0
     else :
-        collection.insert_one({'id':id, 'password':password})
+        if (type):
+            collection.insert_one({'id':id, 'password':password, 'books':[]})
+        else :
+            collection.insert_one({'id':id, 'password':password})
+        
         return 1
     
 def issueBook(bookid, studentid):
     book = bookList.find_one(bookid)
     student = studentList.find_one(studentid)
     if (book and student):
-        if (book['available'] > 0):
+        if (book['available'] > 1):
             book['available'] -= 1
-            student['CurrentBooks'] += [bookid]
+            student['books'].append(bookid)
             return 1
         else :
             return 0
@@ -87,7 +91,7 @@ def takeBook(bookid, studentid):
 def getBookInfo(bookid):
     book = bookList.find_one(bookid)
     if (book) :
-        return {'id':book['id'],'name':book['name'], 'author':book['author'], 'total':book['total'], 'available':book['available']}
+        return {'name':book['name'], 'author':book['author'], 'total':book['total'], 'available':book['available']}
     else :
         return {}
 
