@@ -1,10 +1,14 @@
-body {
+/* html,body{
+    overflow:auto;
+} */
+
+body{
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
     background: linear-gradient(to bottom, #f0f8ff, #87ceeb); /* Light blue gradient */
-    height: 100vh;
+    height: 100vh;  
     width: 100vw; 
     display: flex;
     flex-direction: column;
@@ -55,4 +59,41 @@ input {
 
 #login{
     margin-left : 210px;
+}
+
+#wrapper{
+    max-height: 300px; /* Set a fixed height for the container */
+    overflow: auto; /* Enable vertical scrolling */
+}
+
+
+
+tr {
+    border : 1px solid black;
+    padding : 10px;
+}
+
+td {
+    width : 10%;
+    padding : 10px;
+    border : 1px solid black;
+
+}
+table{
+    display: block;
+    height: 750px;
+    overflow-y: auto;
+}
+
+table::-webkit-scrollbar {
+    width: 7px; /* Width of the scrollbar */
+}
+
+table::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3); /* Transparent scrollbar thumb */
+    border-radius: 6px;
+}
+
+table::-webkit-scrollbar-track {
+    background: transparent; /* Transparent scrollbar track */
 }

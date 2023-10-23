@@ -1,16 +1,15 @@
 from flask import Flask, render_template, request, jsonify
-print("Importing")
 import database
-print("imported")
 
 app = Flask(__name__)
 
 # Configure the path to the templates folder
 app.template_folder = 'templates'
 
-@app.route('/studentPage')
+@app.route('/listBooks', methods=['GET'])
 def studentPage():
-    return render_template('studentPage.html')
+    response = database.listBooks()
+    return response
 
 @app.route('/')
 def home():
@@ -18,21 +17,27 @@ def home():
 
 @app.route('/login',methods=['POST'])
 def login():
-
     data = request.get_json()
-    student = database.studentList.find_one({'id':data['id']})
-    response = {}
+    collection = database.studentList
 
-    if (student) :
-        if (student['password'] == data['password']) :
-            response = {'status':'success','name':student['name'],'id':student['id'], 'books':{}}
-            for a in student['books'] :
-                response['books'].update(a = database.getBookInfo(a))
+    if (data['isAdmin']):
+        collection = database.adminList
+
+    user = collection.find_one({'id':data['id']})
+    response = {}
+    if (user) :
+        if (user['password'] == data['password']) :
+            if (data['isAdmin']):
+                return jsonify({'status':'success'})
+            else :
+                response = {'status':'success','name':user['name'],'id':user['id'], 'books':{}}
+                for a in user['books'].keys() :
+                    response['books'].update({a : database.getBookInfo(a)})
+                    response['books'][a].update({'issueDate':user['books'][a]['issueDate'],'dueDate':user['books'][a]['dueDate']})
         else :
             response = {'status':'invalid password'}
     else :
         response = {'status':'User doesn\'t exist'}
-    print(response)
     return jsonify(response), 200
 
 

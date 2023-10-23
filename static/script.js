@@ -2,6 +2,11 @@ var isAdmin = 0;
 var userid = "";
 var password = "";
 
+var booksTable = document.createElement("table");
+booksTable.style.display = "none";
+var takenBooks = document.createElement("table");
+takenBooks.style.display = ""
+
 document.getElementById("adminButton").addEventListener("click", function () {
     isAdmin = 1;
     document.getElementById("title").textContent = "Admin Login";
@@ -12,18 +17,103 @@ document.getElementById("studentButton").addEventListener("click", function () {
     document.getElementById("title").textContent = "Student Login";
 });
 
+function listBooks(listBooksButton){
+   
+    if (booksTable.style.display === "none"){
+    
+        if (booksTable.innerHTML === ""){
+            fetch('/listBooks',{
+                methode : 'GET'
+            })
+            .then(response => response.json())
+            .then(data => {
+                booksTable.style.position = "fixed";
+                booksTable.style.top = '200px';
+                var booksTablethead = document.createElement("thead"); 
+                booksTable.appendChild(booksTablethead);
+
+                var tableHeaderRow = document.createElement("tr");
+                addColumn(tableHeaderRow, 10, "BookID");
+                addColumn(tableHeaderRow, 25, "Title");
+                addColumn(tableHeaderRow, 25, "Author");
+                addColumn(tableHeaderRow, 10, "Total");
+                addColumn(tableHeaderRow, 10, "Available");
+                booksTablethead.appendChild(tableHeaderRow);
 
 
-//     handleLoginRequest(userid, password, admin === 1 ? "admin" : "user");
+                var booksTabletbody = document.createElement("tbody");
+                for (const bookID in data) {
+                        const book = data[bookID];
+                        var bookRow = document.createElement("tr");
+                        addCell(bookRow, bookID);
+                        addCell(bookRow, book.name);
+                        addCell(bookRow, book.author);
+                        addCell(bookRow, book.total);
+                        addCell(bookRow, book.available);
+                        booksTabletbody.appendChild(bookRow);
+                    
+                }
+                booksTable.appendChild(booksTablethead);
+                booksTable.appendChild(booksTabletbody);
+                document.body.appendChild(booksTable);
+            })
+        }
+        listBooksButton.textContent = "Back";
+        takenBooks.style.display = "none";
+        booksTable.style.display = "";
+    }
+    else{
+        listBooksButton.textContent = "View Books";
+        takenBooks.style.display = "";
+        booksTable.style.display = "none"; 
+    }
+
+};
 
 function addColumn(tableHeaderRow, width, columnName){
     var column = document.createElement("th");
     column.textContent = columnName;
-    column.style.border = "1px solid black"; 
     column.style.width = width.toString()+"%"; 
-    column.style.padding = "10px"; 
-    tableHeaderRow.appendChild(column)
+    tableHeaderRow.appendChild(column);
 };
+
+function uiPart(contentContainer, name ,id){
+    var nameElement = document.createElement('label');
+    nameElement.textContent = "Name : "+name;
+    nameElement.style.textContent = "Top left corner";
+    nameElement.style.position = "fixed";
+    nameElement.style.top = "70px";
+    nameElement.style.left = "200px";
+    contentContainer.appendChild(nameElement);
+
+    var idElement = document.createElement('label');
+    idElement.textContent = "ID : "+id;
+    idElement.style.textContent = "Top left corner";
+    idElement.style.position = "fixed";
+    idElement.style.top = "100px";
+    idElement.style.left = "200px";
+    contentContainer.appendChild(idElement);
+
+    var listBooksButton = document.createElement("button");
+    listBooksButton.id = "listBooks"
+    listBooksButton.textContent = "View Books";
+    listBooksButton.style.textContent = "Top right corner";
+    listBooksButton.style.position = "fixed";
+    listBooksButton.style.top = "100px";
+    listBooksButton.style.right = "200px";
+    listBooksButton.addEventListener("click", function() {
+        listBooks(listBooksButton);
+    });
+    
+    contentContainer.appendChild(listBooksButton);
+}
+
+function addCell(row, content){
+    var cell = document.createElement("td");
+    cell.textContent = content;
+    row.appendChild(cell);
+}
+
 
 document.getElementById("login").addEventListener("click", function () {
     event.preventDefault();
@@ -42,92 +132,45 @@ document.getElementById("login").addEventListener("click", function () {
         body: JSON.stringify(data)
     })
 
-        .then(response => response.json())
-        .then(data => {
-            if (data['status'] != 'success') {
-                document.getElementById("status").textContent = "Invalid Credentials";
+    .then(response => response.json())
+    .then(data => {
+        if (data['status'] != 'success') {
+            document.getElementById("status").textContent = "Invalid Credentials";
+        }
+        else {
+
+            var contentContainer = document.getElementById('content-container');
+            contentContainer.innerHTML = "";
+
+            uiPart(contentContainer, data['name'],data['id']);
+
+            takenBooks.style.position = "fixed";
+            takenBooks.style.top = '200px';
+
+            var tableHeaderRow = document.createElement("tr");
+            addColumn(tableHeaderRow, 10,"BookID");
+            addColumn(tableHeaderRow, 25,"Title");
+            addColumn(tableHeaderRow, 25, "Author");
+            addColumn(tableHeaderRow, 10, "Issue");
+            addColumn(tableHeaderRow, 10, "Due");
+
+            takenBooks.appendChild(tableHeaderRow);
+
+            for (const bookID in data["books"]) {
+                if (data.books.hasOwnProperty(bookID)) {
+                    const book = data.books[bookID];
+
+                    var bookRow = document.createElement("tr");
+                    addCell(bookRow, bookID);
+                    addCell(bookRow, book.name);
+                    addCell(bookRow, book.author);
+                    addCell(bookRow, book.issueDate);
+                    addCell(bookRow, book.dueDate);
+                    takenBooks.appendChild(bookRow);
+                }
             }
-            else {
-            // if (true)
-                var contentContainer = document.getElementById('content-container');
-                contentContainer.innerHTML = "";
 
-                var nameElement = document.createElement('label');
-                nameElement.textContent = "Name : "+data['name'];
-                contentContainer.appendChild(nameElement);
-                var rollElement = document.createElement('label');
-                rollElement.textContent = "ID   : "+data['id'];
-                contentContainer.appendChild(rollElement);
-                nameElement.style.textContent = "Top left corner";
-                nameElement.style.position = "fixed";
-                nameElement.style.top = "70px";
-                nameElement.style.left = "50px";
-
-                rollElement.style.textContent = "Top left corner";
-                rollElement.style.position = "fixed";
-                rollElement.style.top = "100px";
-                rollElement.style.left = "50px";
-
-
-
-                var bookTable = document.createElement("table");
-                bookTable.style.borderCollapse = "collapse"; 
-                bookTable.style.width = "80%";              
-
-                var tableHeaderRow = document.createElement("tr");
-                addColumn(tableHeaderRow, 10,"BookID")
-                addColumn(tableHeaderRow, 30,"Title")
-                addColumn(tableHeaderRow, 30, "Author")
-                addColumn(tableHeaderRow, 10, "Taken")
-                addColumn(tableHeaderRow, 10, "Due")
-
-                bookTable.appendChild(tableHeaderRow);
-
-                // for (const bookID in data["books"]) {
-                //     if (data.books.hasOwnProperty(bookID)) {
-                //         const book = data.books[bookID];
-
-                //         var bookRow = document.createElement("tr");
-                //         var titleCell = document.createElement("td");
-                //         titleCell.textContent = book.title;
-                //         titleCell.style.border = "1px solid black";
-                //         titleCell.style.width = "30%"; 
-                //         titleCell.style.padding = "10px";
-
-                //         var authorCell = document.createElement("td");
-                //         authorCell.textContent = book.author;
-                //         authorCell.style.border = "1px solid black";
-                //         authorCell.style.width = "20%";
-                //         authorCell.style.padding = "10px";
-
-                //         var takenCell = document.createElement("td");
-                //         takenCell.textContent = book.taken;
-                //         takenCell.style.border = "1px solid black";
-                //         takenCell.style.width = "15%";
-                //         takenCell.style.padding = "10px";
-
-                //         var dueCell = document.createElement("td");
-                //         dueCell.textContent = book.due;
-                //         dueCell.style.border = "1px solid black";
-                //         dueCell.style.width = "15%";
-                //         dueCell.style.padding = "10px";
-
-                        
-                //         bookRow.appendChild(titleCell);
-                //         bookRow.appendChild(authorCell);
-                //         bookRow.appendChild(takenCell);
-                //         bookRow.appendChild(dueCell);
-                //         bookTable.appendChild(bookRow);
-                //     }
-                // }
-
-              bookTable.style.border = "1px solid black";
-            document.body.appendChild(bookTable);
-
-
-             
-
-
-            }
-        })
+        document.body.appendChild(takenBooks);
+        }
+    })
 });

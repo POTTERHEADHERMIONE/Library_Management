@@ -1,0 +1,6 @@
+Run addStuff.py **only once**
+
+everytime you restart your system run this 
+sudo systemctl start mongod
+
+to test run server.py and open the address mentioned in the terminal
