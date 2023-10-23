@@ -1,5 +1,5 @@
 # Web page
-- [Phase 2] Google sign in - Figure out from database side tooo
+- [Phase 2] Google sign in - Figure out from database side too
 
 ## Student
 - Can see the list of books and quantity available
