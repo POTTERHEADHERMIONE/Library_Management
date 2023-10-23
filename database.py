@@ -15,23 +15,23 @@ bookList = db['books']
 # studentList.delete_many({})
 # bookList.delete_many({})
 
-def incBookCount(id):
+def incBookCount(id, count):
     book = bookList.find_one({'id':id})
     if (book):
-        book.available+=1
+        book.available+=count
         return 1
     else :
         return 0
     
-def decBookCount(id):
+def decBookCount(id, count):
     book = bookList.find_one({'id':id})
     if (book):
-        book.available -= 1
+        book.available -= count
         return 1
     else :
         return 0
 
-def addNewBook(id, name, author, count):
+def addNewClass(id, name, author, count):
     if (count < 1):
         return 0
     bookExists = bookList.find_one({'id':id})
@@ -39,10 +39,10 @@ def addNewBook(id, name, author, count):
         print("Book with the id "+str(id)+" already exists")
         return 0
     else :
-        bookList.insert_one({'id':id, 'name':name, 'author':author, 'total':count,'available':count})
+        bookList.insert_one({'id':id, 'name':name, 'author':author, 'total':count,'available':count, "withStudent":[]})
         return 1
 
-def deleteBook(id):
+def deleteClass(id):
     book = bookList.find_one({'id':id})
     if (book):
         bookList.delete_one(book)
@@ -70,6 +70,7 @@ def issueBook(bookid, studentid):
     if (book and student):
         if (book['available'] > 1):
             book['available'] -= 1
+            book['withStudent'].append(studentid)
             student['books'].append(bookid)
             return 1
         else :
@@ -82,15 +83,19 @@ def takeBook(bookid, studentid):
     student = studentList.find_one(studentid)
     if (book and student):
         book['available'] += 1
+        book['withStudent'].remove(studentid)
         student['CurrentBooks'].remove(bookid)
         return 1
     else :
         return 0
      
-def getBookInfo(bookid):
+def getBookInfo(bookid, who="student"):
     book = bookList.find_one(bookid)
     if (book) :
-        return {'name':book['name'], 'author':book['author'], 'total':book['total'], 'available':book['available']}
+        response  = {'name':book['name'], 'author':book['author'], 'total':book['total'], 'available':book['available']}
+        if (who == "admin") :
+            response.update({'withStudent':book['withStudent']})
+        return response
     else :
         return {}
 

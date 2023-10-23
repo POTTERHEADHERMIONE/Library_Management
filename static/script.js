@@ -81,36 +81,6 @@ document.getElementById("login").addEventListener("click", function () {
                 addColumn(tableHeaderRow, 10, "Taken")
                 addColumn(tableHeaderRow, 10, "Due")
 
-
-                // var titleHead = document.createElement("th");
-                // titleHead.textContent = "Title";
-                // titleHead.style.border = "1px solid black"; 
-                // titleHead.style.width = "30%"; 
-                // titleHead.style.padding = "10px"; 
-
-                // var authorHead = document.createElement("th");
-                // authorHead.textContent = "Author";
-                // authorHead.style.border = "1px solid black";
-                // authorHead.style.width = "20%";
-                // authorHead.style.padding = "10px";
-
-                // var takenHead = document.createElement("th");
-                // takenHead.textContent = "Taken";
-                // takenHead.style.border = "1px solid black";
-                // takenHead.style.width = "15%";
-                // takenHead.style.padding = "10px";
-
-                // var dueHead = document.createElement("th");
-                // dueHead.textContent = "Due";
-                // dueHead.style.border = "1px solid black";
-                // dueHead.style.width = "15%";
-                // dueHead.style.padding = "10px";
-
-                // tableHeaderRow.appendChild(titleHead);
-                // tableHeaderRow.appendChild(authorHead);
-                // tableHeaderRow.appendChild(takenHead);
-                // tableHeaderRow.appendChild(dueHead);
-
                 bookTable.appendChild(tableHeaderRow);
 
                 // for (const bookID in data["books"]) {
