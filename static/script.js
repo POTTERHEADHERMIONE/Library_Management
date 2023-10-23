@@ -21,10 +21,10 @@ document.getElementById("studentButton").addEventListener("click", function () {
 
 document.getElementById("login").addEventListener("click", function () {
     event.preventDefault();
-    username = document.getElementById('username').value;
+    username = document.getElementById('userid').value;
     password = document.getElementById('password').value;
     var data = {
-        'username': username,
+        'id': username,
         'password': password,
         'isAdmin': isAdmin
     };
@@ -40,7 +40,7 @@ document.getElementById("login").addEventListener("click", function () {
 
         .then(response => response.json())
         .then(data => {
-            if (data['status'] == 'Invalid Credentials') {
+            if (data['status'] != 'Success') {
                 document.getElementById("status").textContent = "Invalid Credentials";
             }
             else {
