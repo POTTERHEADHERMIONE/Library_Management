@@ -3,4 +3,6 @@ Run addStuff.py **only once**
 everytime you restart your system run this 
 sudo systemctl start mongod
 
-to test run server.py and open the address mentioned in the terminal
+to test, run this : 
+gunicorn -w 4 -b 0.0.0.0:8000 server:app
+
