@@ -157,13 +157,13 @@ function uiPart(contentContainer, name ,id){
 //New addition
 
 function listStudents(viewStudentButton) {
-    // Make a fetch request to the server to get the student list
+    
     fetch('/listStudents', {
         method: 'GET'
     })
     .then(response => response.json())
     .then(data => {
-        // Handle the received student list data
+    
         displayStudentList(data);
     })
     .catch(error => {
@@ -174,7 +174,6 @@ function listStudents(viewStudentButton) {
 
 
 
-// NEW AADDITION:
 
 // NEW AADDITION:
 
@@ -218,9 +217,8 @@ function displayStudentList(studentList) {
     });
 
     studentsTable.appendChild(studentsTableBody);
-    contentContainer.appendChild(studentsTable);  // Make sure this line is added
+    contentContainer.appendChild(studentsTable);  
 
-    // Append the contentContainer to the body
     document.body.appendChild(contentContainer);
 }
 
@@ -238,14 +236,14 @@ function createButton(text, clickHandler) {
 // NEW ADDITION:
 
 function issueBook(studentId) {
-    // Implement the logic to issue a book for the given studentId
+
     console.log("Issuing book for student ID:", studentId);
 }
 
 // NEW ADDITION:
 
 function takeBook(studentId) {
-    // Implement the logic to take a book for the given studentId
+  
     console.log("Taking book for student ID:", studentId);
 }
 
@@ -266,14 +264,10 @@ function viewStudentUI() {
     viewStudentButton.style.top = "100px";
     viewStudentButton.style.right = "200px";
 
-    // Append the button to the body or any other container element
     document.body.appendChild(viewStudentButton);
 
-    // Add an event listener if needed
     viewStudentButton.addEventListener("click", function () {
-        // Handle button click event
-        // For example, call a function to view students
-        // viewStudents();
+    
         listStudents(viewStudentButton);
     });
 }
@@ -311,6 +305,7 @@ document.getElementById("login").addEventListener("click", function () {
             document.getElementById("status").textContent = "Invalid Credentials";
         }
         else {
+            
             //NEW ADDITION:
 
             var contentContainer = document.getElementById('content-container');

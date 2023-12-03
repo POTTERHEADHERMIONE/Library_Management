@@ -117,6 +117,19 @@ def listBooks(isStudent=1):
         response.update({document['id'] : {'author' : document['author'] , 'name':document['name'], 'available':document['available'], 'total':document['total']}})
     return response
 
+
+
+
+# NEW ADDITION : for the student list
+
+
+def listStudents(isStudent=1):
+    response = []
+    for document in studentList.find({}):
+        response.append({'studentid': document['studentid'], 'studentname': document['studentname']})
+    return response
+
+
 def clear():
     adminList.delete_many({})
     studentList.delete_many({})
