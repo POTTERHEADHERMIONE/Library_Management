@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barcode Scanner Demo</title>
+  <script src="https://cdn.jsdelivr.net/npm/quagga"></script>
+</head>
+<body>
+  <h1>Barcode Scanner Demo</h1>
+  <button onclick="startScanner()">Start Scanner</button>
+  <button onclick="stopScanner()">Stop Scanner</button>
+  <div id="scanner-container" style="width: 100%;"></div>
+  <input type="text" id="barcode-input" placeholder="Scanned Barcode" readonly>
+  <p id="result-display"></p>
+  
+  <script src="barcode_add.js"></script>
+</body>
+</html>
