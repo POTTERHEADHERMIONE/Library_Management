@@ -2,14 +2,32 @@ from flask import Flask, render_template, request, jsonify
 import database
 
 app = Flask(__name__)
-
-# Configure the path to the templates folder
 app.template_folder = 'templates'
+
+@app.route('/admin')
+def adminPage():
+    render_template('admin.html')
+
+@app.route('/getBookInfo/<bookID>')
+def getBookInfo(bookID) :
+    return database.getBookInfo(bookID,0)
+
+@app.route('/getStudentInfo/<studentID>')
+def getStudentInfo(studentID):
+    return database.getStudentInfo(studentID)
 
 @app.route('/listBooks', methods=['GET'])
 def studentPage():
     response = database.listBooks()
     return response
+
+@app.route('/updateBookCount')
+def updateBookCount():
+    data = request.get_json()
+    bookID = data['bookID']
+    newCount = data['newCount']
+    database.updateBookCount(bookID, newCount)
+
 
 @app.route('/')
 def home():
@@ -42,4 +60,4 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=80)
+    app.run(debug=True, host='0.0.0.0')

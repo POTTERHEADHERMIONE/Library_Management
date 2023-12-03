@@ -9,19 +9,15 @@ adminList = db['admin']
 studentList = db['student']
 bookList = db['books']
 
-
-def incBookCount(id, count):
-    book = bookList.find_one({'id':id})
+def updateBookCount(id, count):
+    book = bookList.find_one({"id":id})
     if (book):
-        book.available+=count
-        return 1
-    else :
-        return 0
-    
-def decBookCount(id, count):
-    book = bookList.find_one({'id':id})
-    if (book):
-        book.available -= count
+        oldCount = book['total']
+        diff = count - oldCount
+        if (diff + book['available'] < 0):
+            # Ignoring this case for now, gotta deal with it later
+            pass
+        bookList.update_one({"id" : id}, {"total":count, "available":diff + book['available']})
         return 1
     else :
         return 0
@@ -101,11 +97,20 @@ def takeBook(bookid, studentid):
     else :
         return 0
      
+def getStudentInfo(studentID):
+    response = studentList.find_one({"id":studentID})
+    if (response):
+        response.pop('password')
+        return response
+    else :
+        return {}
+
+
 def getBookInfo(bookid, who="student"):
     book = bookList.find_one({"id":bookid})
     if (book) :
         response  = {'name':book['name'], 'author':book['author'], 'total':book['total'], 'available':book['available']}
-        if (who == "admin") :
+        if (who != "student") :
             response.update({'withStudent':book['withStudent']})
         return response
     else :

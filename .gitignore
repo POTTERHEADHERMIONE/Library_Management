@@ -1,5 +1,2 @@
-
-*.pyc
+__pycache__
 .vscode
-addstuff.py
-addstuff.py

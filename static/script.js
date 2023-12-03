@@ -138,7 +138,9 @@ document.getElementById("login").addEventListener("click", function () {
             document.getElementById("status").textContent = "Invalid Credentials";
         }
         else {
-
+            if (isAdmin == 0){
+                window.location.href = "/admin";
+            }
             var contentContainer = document.getElementById('content-container');
             contentContainer.innerHTML = "";
 

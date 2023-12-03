@@ -69,6 +69,7 @@ database.addUser("30", "p@ssw0rd123", "Mia Carter")
 
 #Adding 1 admin
 database.addUser("307","SPA","Saakshi")
+# database.addUser()
 
 #issuing books
 for i in range(50):
