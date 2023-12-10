@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <div id="content-container">
+        <label style="position: fixed; top: 40px; left: 200px;">Student id &nbsp;: {{id}}</label>
+        <label style="position: fixed; top: 70px; left: 200px;">Student Name : {{studentName}}</label>
+        <input style="position: fixed; top: 50px; left: 1250px; width: 200px; height: 15px" id="bookID" placeholder="Enter book ID">
+        <button style="position: fixed; top: 110px; left: 1300px; width: 120px;"  onclick="issueBook({{id}})">Issue Book</button>
+    </div>
+    <table style="position: fixed; top: 200px;">
+        <thead>
+            <tr>
+                <th style="width:10%;">Book ID</th>
+                <th style="width:30%;">Name</th>
+                <th style="width:30%;">Author</th>
+                <th style="width:10%;">Issue Date</th>
+                <th style="width:10%;">Due Date</th>
+                <!-- <th style="width:20%;">Penalty</th> -->
+            </tr>
+        </thead>
+        <tbody id="booksTableHead">
+        </tbody>
+    </table>
+        
+    <div id="wrapper" style="height:100px;overflow: auto">
+    </div>
+    <script src="{{ url_for('static', filename='column_cell.js') }}"></script>
+    <script src="{{ url_for('static', filename='hasBooks.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded',onDocumentLoad( {{ books | tojson | safe }}, {{id}} ));
+    </script>
+
+</body>
+</html>

@@ -3,11 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+    <title>Library Management System</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+
 </head>
 <body>
-    <div id=""></div>
-    
+    <div id="content-container">
+        <button id="addBSButton" style="position: fixed; top: 5%; right: 75%;" onClick="addBSButtonClicked()">Add Book</button>
+        <button id="viewBSButton" style="position: fixed; top: 5%; width : 130px; right: 67%;" onClick="viewBSButtonClicked()">View Students</button>
+        <button style="position: fixed; top: 5%; right: 61%;" onClick="logout()">Log out</button> 
+        <input id="searchBar" style="width: 400px; position: fixed; top: 5%; right: 15%;" placeholder="Search by ID, Title, Author">
+        <button style="position:fixed; top: 4.70%; right:15.5%; height: 36px; width: 36px; border-radius: 0px; background-color: transparent; " onclick="search()"><img id='searchBarImg' src="/static/images/search.png" alt="Button Image" width="36" height="36"></button>
+        <div id="addBSFieldsDiv">
+
+        </div>
+    </div>
+    <table id="mainTable" style="position: fixed; top:13%">
+        <thead>
+            <tr>
+                <th style="width: 10%;">ISBN</th>
+                <th style="width: 30%;">Title</th>
+                <th style="width: 25%;">Author</th>
+                <th style="width: 10%;">Total</th>
+                <th style="width: 10;">Available</th>
+        </thead>
+        <tbody id="booksTbody">
+
+        </tbody>
+    </table>
+    <script src="{{ url_for('static', filename='parseCookie.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+    <script src="{{ url_for('static', filename='barCode_scan.js') }}"></script>
+    <script src="{{ url_for('static', filename='column_cell.js') }}"></script>   
+    <script src="{{ url_for('static', filename='AdminRoutes.js') }}"></script>   
+    <script src="{{ url_for('static', filename='quagga.js') }}"></script>  
+
 </body>
 </html>

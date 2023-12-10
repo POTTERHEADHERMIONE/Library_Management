@@ -34,11 +34,16 @@ button {
     border: none;
     border-radius: 100px;
     width: 100px;
+    height: 40px;
 }
 
 
 button:active {
     background-color: #87ceeb; 
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 form {
@@ -57,15 +62,6 @@ input {
     margin-bottom: 10px;
 }
 
-#login{
-    margin-left : 210px;
-}
-
-#wrapper{
-    max-height: 300px; /* Set a fixed height for the container */
-    overflow: auto; /* Enable vertical scrolling */
-}
-
 
 
 tr {
@@ -81,7 +77,7 @@ td {
 }
 table{
     display: block;
-    height: 750px;
+    height: 780px;
     overflow-y: auto;
 }
 

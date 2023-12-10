@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='verifyCreds.js') }}"></script>
+    <script src="{{ url_for('static', filename='student.js') }}"></script>
+    <script src="{{ url_for('static', filename='column_cell.js') }}"></script>
+
+</head>
+<body>
+    <div id="content-container">
+        <label id='labelName' style="position: fixed; top: 8%; left: 20%;"></label>
+        <label id='labelID' style="position: fixed; top: 10%; left: 20%;"></label>
+        <button id="listBooks" style="position: fixed; top: 8%; width: 120px; right: 20%;" onClick="listBooks()">View Books</button>
+        <button id="listBooks" style="position: fixed; top: 8%; width: 80px; right: 28%;" onClick="logout()">Logout</button>
+    </div>
+        
+
+</body>
+</html>

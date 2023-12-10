@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+    <script src="{{ url_for('static', filename='parseCookie.js') }}"></script>
+</head>
+<body>
+    <h1>Library Management System</h1>
+    
+    <div>
+        <h2>PROFILE</h2>
+        <button id="adminButton" onclick="setAdmin()">Admin</button>
+        <button id="studentButton" onclick="setStudent()">Student</button>
+    </div>
+
+    <h2 id="title">Student Login</h2>
+    <form>
+        <label>User ID:</label>
+        <input type="text" id="id" required><br>
+        <label>Password:</label>
+        <input type="password" id="password" required><br>
+        <label id = "status"></label>
+    </form>
+    <button id = "login" type="button()" onclick="login()">Login</button>
+
+
+</body>
+</html>
