@@ -3,11 +3,7 @@ var isAdmin = false;
 document.addEventListener('DOMContentLoaded', onDocumentLoad);
 
 async function onDocumentLoad(){
-    var redirected = JSON.parse(localStorage.getItem('redirected'));
-    if (redirected === null || redirected == true){
-        localStorage.setItem('redirected',false);
-    }
-    else{
+    if (cookieExists()){
         isAdmin = parseCookie()['isAdmin'];
         if (isAdmin)
             window.location.href = '/admin';
@@ -32,9 +28,13 @@ function login(){
     var data = {
         'id': id,
         'password': password,
-        'isAdmin': isAdmin
     };
-    fetch('/login',{
+    var loginRoute;
+    if (isAdmin)
+        loginRoute = '/api/admin/login';
+    else 
+        loginRoute = '/api/user/login';
+    fetch(loginRoute,{
         method : 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -43,9 +43,9 @@ function login(){
     })
     .then(response => response.json())
     .then(data => {
-        if (data['status'] != 'success') {
+        // console.log(data);
+        if (data['status'] != 'success') 
             document.getElementById("status").textContent = "Invalid Credentials";
-        }
         else {
             document.cookie = 'token='+data['token'];
             document.cookie = 'id='+id;

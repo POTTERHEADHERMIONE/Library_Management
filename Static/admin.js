@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', onDocumentLoad);
 
 class Elements{
-    // The table that shows list of Books and Students
+    // The table that shows list of Books and Users
     static mainTable = null;
 
     // add Book Student Button
@@ -33,8 +33,8 @@ class States{
     // Set to true when the table is currently showing list of books
     static showingBooks = true;
 
-    // Set to true if "View Students" is clicked atleast once
-    // When "View Students is clicked", request is made to server to retrieve list of students
+    // Set to true if "View Users" is clicked atleast once
+    // When "View Users is clicked", request is made to server to retrieve list of students
     // The response is then used to construct the table
     // Once the table is constructed (studentsTableConstructed is set to true), there is no need to retrieve data from server and construct table again
     static studentsTableConstructed = false;
@@ -72,16 +72,16 @@ async function onDocumentLoad(){
     Elements.searchBar = document.getElementById('searchBar');
     Elements.searchBarImg = document.getElementById('searchBarImg');
 
-    Misc.token = parseCookie()['token'];
-    Misc.id = parseCookie()['id'];
+    var cookieData = parseCookie();
+    Misc.token = cookieData['token'];
+    Misc.id = cookieData['id'];
 
     data = {
         'id' : Misc.id,
         'token' : Misc.token,
-        'isAdmin' : true
     };
     console.log(data);
-    fetch(AdminRoutes.getBooksListRoute,{
+    fetch(AdminRoutes.getBooksList(),{
         method : 'POST',
         headers : { 'Content-Type': 'application/json'},
         body    : JSON.stringify(data)           
@@ -120,7 +120,7 @@ async function viewBSButtonClicked(){
                 'id' : Misc.id,
                 'token' : Misc.token,
             };
-            await fetch(AdminRoutes.getStudentsListRoute,{
+            await fetch(AdminRoutes.getUsersList(),{
                 method : 'POST',
                 headers : { 'Content-Type': 'application/json'},
                 body    : JSON.stringify(data)  
@@ -143,7 +143,7 @@ async function viewBSButtonClicked(){
         Elements.searchBar.placeholder = 'Search by ID, Title, Author';
         stopScanner();
         Elements.mainTable.innerHTML = Misc.booksTableInnerHTML;
-        Elements.viewBSButton.textContent = 'View Students';
+        Elements.viewBSButton.textContent = 'View Users';
         Elements.addBSButton.textContent = 'Add Book';
         States.showingBooks = true;
     }
@@ -220,12 +220,12 @@ function addNewStudent(){
     var id = document.getElementById('id').value;
     var name = document.getElementById('name').value;
     data = {
-        'studentID'   : id,
+        'userID'   : id,
         'name' : name,
         'id'   : Misc.id, //admin id
         'token': Misc.token
     };
-    fetch(AdminRoutes.addNewStudentRoute,{
+    fetch(AdminRoutes.addNewUser(),{
         method  : 'POST',
         headers : { 'Content-Type': 'application/json'},
         body    : JSON.stringify(data)        
@@ -249,7 +249,7 @@ function addNewStudent(){
 function getAuthorTitle(isbn){
     stopScanner();
     document.getElementById('isbn').value = isbn;
-    fetch(AdminRoutes.getAuthorTitle,{
+    fetch(AdminRoutes.getDetailsFromISBN(),{
         method : 'POST',
         headers : { 'Content-Type': 'application/json'},
         body : JSON.stringify({'isbn':isbn})
@@ -293,7 +293,7 @@ function addNewBook(){
         'id'    : Misc.id,
         'token' : Misc.token
     }
-    fetch(AdminRoutes.addNewBookRoute,{
+    fetch(AdminRoutes.addNewBook(),{
         method  : 'POST',
         headers : { 'Content-Type': 'application/json'},
         body    : JSON.stringify(data)
@@ -316,12 +316,12 @@ function addNewBook(){
 function deleteStudent (id){
     var response = confirm("Are you sure ? This action cannot be undone (yes/no)");
     data = {
-        'studentID':id,
+        'userID':id,
         'id' : Misc.id,
         'token' : Misc.token
     }
     if (response){
-        fetch (AdminRoutes.deleteStudentRoute , {
+        fetch (AdminRoutes.deleteUser() , {
             method : 'POST',
             headers : { 'Content-Type': 'application/json'},
             body : JSON.stringify(data)
@@ -348,7 +348,7 @@ function deleteBook (isbn){
         'token' : Misc.token
     }
     if (response){
-        fetch (AdminRoutes.deleteBookRoute , {
+        fetch (AdminRoutes.deleteBook() , {
             method : 'POST',
             headers : { 'Content-Type': 'application/json'},
             body : JSON.stringify(data)
@@ -444,25 +444,25 @@ function search(){
     }
 }
 
-function getDetailsFromBarCode(isbn){
-    data = {
-        'isbn':isbn
-    }
-    fetch (AdminRoutes.getDetailsFromBarCode , {
-        method : 'POST',
-        headers : { 'Content-Type': 'application/json'},
-        body : JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then (data => {
-        if (data['status'] == 'success'){
-            document.getElementById('isbn').value = '9788126509621';
-            document.getElementById('author').value = data['author'];
-            document.getElementById('title').value = data['title'];
-        }
-        else{
-            alert(data['status']);
-        }
-    })
+// function getDetailsFromBarCode(isbn){
+//     data = {
+//         'isbn':isbn
+//     }
+//     fetch (AdminRoutes.getDetailsFromISBN() , {
+//         method : 'POST',
+//         headers : { 'Content-Type': 'application/json'},
+//         body : JSON.stringify(data)
+//     })
+//     .then(response => response.json())
+//     .then (data => {
+//         if (data['status'] == 'success'){
+//             document.getElementById('isbn').value = '9788126509621';
+//             document.getElementById('author').value = data['author'];
+//             document.getElementById('title').value = data['title'];
+//         }
+//         else{
+//             alert(data['status']);
+//         }
+//     })
     
-}
+// }

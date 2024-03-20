@@ -1,18 +1,28 @@
+class cookie{
+    static token = null;
+    static id = null;
+}
+
 async function onDocumentLoad(withStudentsArray, bookID) {
+    var cookieData = parseCookie();
+    cookie.token = cookieData['token'];
+    cookie.id = cookieData['id'];
     var studentsTable = document.getElementById("studentsTable");
     for (var a = 0 ; a < withStudentsArray.length ; a++){
-        data = await getIssueDue(withStudentsArray[a],bookID);
-        studentsTable.appendChild(addWithStudentRow(data['name'], withStudentsArray[a], data['dueDate'], data['issueDate']))
+        data = await withUserDetials(withStudentsArray[a],bookID, cookie.id, cookie.token);
+        studentsTable.appendChild(addWithStudentRow(withStudentsArray[a], data['dueDate'], data['issueDate']))
     }
 }
 
-async function getIssueDue(studentID, isbn){
+async function withUserDetials(userID, isbn, id, token){
     var data = {
-        'studentID' : studentID,
+        'token' : token,
+        'id'    : id,
+        'userID' : userID,
         'isbn' : isbn
     };
 
-    return fetch(AdminRoutes.get,{
+    return fetch(AdminRoutes.withUserDetials(),{
         method : 'POST',
         headers : { 'Content-Type': 'application/json'},
         body : JSON.stringify(data)

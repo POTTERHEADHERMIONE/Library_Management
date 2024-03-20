@@ -9,8 +9,8 @@
 </head>
 <body>
     <div id="content-container">
-        <label style="position: fixed; top: 40px; left: 400px;">ISBN &nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    : {{isbn}}</label>
-        <label style="position: fixed; top: 70px; left: 400px;">Title : {{title}}</label>
+        <label style="position: fixed; top: 40px; left: 400px;">ISBN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    : {{isbn}}</label>
+        <label style="position: fixed; top: 70px; left: 400px;">Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{title}}</label>
         <label style="position: fixed; top: 100px; left: 400px;">Author&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{author}}</label>
         <label style="position: fixed; top: 130px; left: 400px;" id="total">Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{total}}</label>
         <label style="position: fixed; top: 160px; left: 400px;" id="available">Available &nbsp;&nbsp;&nbsp;&nbsp;: {{available}}</label>
@@ -28,9 +28,10 @@
         
     <div id="wrapper" style="height:100px;overflow: auto">
     </div>
-    <script src="{{ url_for('static', filename='column_cell.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='column_cell.js') }}"></script> -->
     <script src="{{ url_for('static', filename='withStudent.js') }}"></script>
-    <script src="{{ url_for('static', filename='AdminRoutes.js') }}"></script>
+    <script src="{{ url_for('static', filename='adminRoutes.js') }}"></script>
+    <script src="{{ url_for('static', filename='functions.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded',onDocumentLoad( {{ withStudents | tojson | safe }} , {{isbn}} ));
     </script>

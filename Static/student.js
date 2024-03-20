@@ -10,16 +10,16 @@ takenBooks.style.display = ""
 document.addEventListener('DOMContentLoaded', onDocumentLoad);
 
 async function onDocumentLoad(){
-    var data = await verifyCreds();
-    if (data['status'] == 'success'){
-        if (data['isAdmin']){
+    data = await verifyToken();
+    if (data['status'] != 'success'){
+        // if (data['isAdmin'] == false){
             localStorage.setItem('redirected',true);
             window.location.href = '/';
-        }
-    }
-    else{
-        localStorage.setItem('redirected',true);
-        window.location.href = '/';
+        // }
+    // }
+    // else{
+        // localStorage.setItem('redirected',true);
+        // window.location.href = '/';
     }
     
 

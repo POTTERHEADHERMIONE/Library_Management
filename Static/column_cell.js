@@ -116,6 +116,7 @@ function addWithStudentRow(id,dueDate,issueDate){
     row.appendChild(issueDateCell);
     row.appendChild(dueDateCell);
 }
+
 // function addCell(row, content, info="", id='', isStudent=false){
 //     var cell = document.createElement("td");
 //     if (info=="BookInfo" || info == "StudentInfo"){

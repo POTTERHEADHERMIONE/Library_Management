@@ -11,7 +11,7 @@
     <div id="content-container">
         <label style="position: fixed; top: 40px; left: 200px;">Student id &nbsp;: {{id}}</label>
         <label style="position: fixed; top: 70px; left: 200px;">Student Name : {{studentName}}</label>
-        <input style="position: fixed; top: 50px; left: 1250px; width: 200px; height: 15px" id="bookID" placeholder="Enter book ID">
+        <input style="position: fixed; top: 50px; left: 1250px; width: 200px; height: 15px" id="isbn" placeholder="Enter book ID">
         <button style="position: fixed; top: 110px; left: 1300px; width: 120px;"  onclick="issueBook({{id}})">Issue Book</button>
     </div>
     <table style="position: fixed; top: 200px;">
@@ -31,8 +31,10 @@
         
     <div id="wrapper" style="height:100px;overflow: auto">
     </div>
-    <script src="{{ url_for('static', filename='column_cell.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='column_cell.js') }}"></script> -->
+    <script src="{{ url_for('static', filename='functions.js') }}"></script>
     <script src="{{ url_for('static', filename='hasBooks.js') }}"></script>
+    <script src="{{ url_for('static', filename='adminRoutes.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded',onDocumentLoad( {{ books | tojson | safe }}, {{id}} ));
     </script>

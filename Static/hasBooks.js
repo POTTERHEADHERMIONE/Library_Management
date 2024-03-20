@@ -1,27 +1,38 @@
 var booksTableHead = document.getElementById("booksTableHead")
 
-async function onDocumentLoad(books, id){
-    for (var bookID in books) {
-        var row = document.createElement("tr");
-        row.id = bookID;
-        var dates = books[bookID];
-        var bookData = await getBook_name_author(bookID);
+class Cookie{
+    static id = null;
+    static token = null;
+}
 
-        addCell(row, bookID, "BookInfo");
-        addCell(row, bookData.name);
+async function onDocumentLoad(books, id){
+    var cookieData = parseCookie();
+    Cookie.id = cookieData['id'];
+    Cookie.token = cookieData['token'];
+
+    for (var isbn in books) {
+        var row = document.createElement("tr");
+        row.id = isbn;
+        var dates = books[isbn];
+        var bookData = await getTakenBookDetails(isbn);
+
+        addCell(row, isbn, "BookInfo");
+        addCell(row, bookData.title);
         addCell(row, bookData.author);
         addCell(row, dates.issueDate);
         addCell(row, dates.dueDate);
-        addCell(row, bookID, "TakeBook",id);
+        addCell(row, isbn, "TakeBook",id);
         booksTableHead.appendChild(row);
     }
 
 }
 
 // getBook_name_author
-async function getBook_name_author(bookID){
-    var data = {'id':bookID}
-    return fetch('/getBook_name_author', {
+async function getTakenBookDetails(isbn){
+    var data = {'isbn':isbn, 
+                'id' : Cookie.id,
+                'token' : Cookie.token}
+    return fetch(AdminRoutes.takenBookDetails(), {
         method : 'POST',
         headers : { 'Content-Type': 'application/json'},
         body : JSON.stringify(data)
@@ -32,12 +43,14 @@ async function getBook_name_author(bookID){
     });
 }
 
-function takeBook(studentID, bookID){
+function takeBook(userID, isbn){
     data = {
-        'studentID':studentID,
-        'bookID':bookID
+        'userID':userID,
+        'isbn':isbn,
+        'id' : Cookie.id,
+        'token' : Cookie.token
     };
-    fetch('/takeBook',{
+    fetch(AdminRoutes.takeBook(),{
         method : 'POST',            
         headers: {
             'Content-Type': 'application/json'
@@ -46,18 +59,20 @@ function takeBook(studentID, bookID){
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById(bookID).remove();
+        document.getElementById(isbn).remove();
     });
 }
 
-function issueBook(studentID){
-    var bookIDInput = document.getElementById('bookID').value;
+function issueBook(userID){
+    var isbnInput = document.getElementById('isbn').value;
     var data = {
-        'studentID' : studentID,
-        'bookID' : bookIDInput
+        'userID' : userID,
+        'isbn' : isbnInput,        
+        'id' : Cookie.id,
+        'token' : Cookie.token
     }
     console.log(data);
-    fetch('/issueBook',{
+    fetch(AdminRoutes.issueBook(),{
         method : 'POST',
         headers : { 'Content-Type': 'application/json'},
         body : JSON.stringify(data)
@@ -66,15 +81,15 @@ function issueBook(studentID){
     .then (data => {
         if (data.status == 'success'){
             var row = document.createElement("tr");
-            row.id = bookID;
-            addCell(row, data.id, "BookInfo");
-            addCell(row, data.name);
+            row.id = isbn;
+            addCell(row, data.isbn, "BookInfo");
+            addCell(row, data.title);
             addCell(row, data.author);
             addCell(row, data.issueDate);
             addCell(row, data.dueDate);
-            addCell(row, data.id, "TakeBook",data.id);
+            addCell(row, data.isbn, "TakeBook",data.id);
             booksTableHead.appendChild(row); 
-            bookIDInput.value = '';
+            isbnInput.value = '';
         }
         else{
             alert(data.status);
