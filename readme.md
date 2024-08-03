@@ -1,5 +1,7 @@
 # Web page
-- [Phase 2] Google sign in - Figure out from database side too
+- A Sign In, Sign Up page.
+- A different dashboard for the student and for the admin.
+- RBAC feature to implement different acccess to the user and the admin.
 
 ## Student
 - Can see the list of books and quantity available
@@ -18,5 +20,5 @@ For each day of late submission, penality increases by x, or any custom function
 - Can decide set of emails well in advance which can register (Ex : Only college mail)
 
 # Server 
-- Gotta make the raspberry pi a server and the college has to link the id 
-- Send mails accordingly when book issued or when book submitted, also 3 days before the deadline
+- Raspberry pi is the server, and the college email Id will be linked to the accounts for verification and access.
+- Send mails accordingly when book issued or when book submitted, also 3 days before the deadline (Like a notification system on the mail)
